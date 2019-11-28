@@ -7,6 +7,20 @@
     group: "graylog"
     mode: 0750
 
+- debug: var=item.mount
+  with_items: "{{ ansible_mounts }}"
+  tags: journal-message-size
+
+- name: GET disk size to limit journal size
+  set_fact:
+    graylog_message_journal_max_size: "{{ (item.size_total / 1024 / 1024 / 1024 * 0.9)|int }}gb"
+  when: "graylog_message_journal_max_size == '0gb' and item.mount == data_disk"
+  with_items: "{{ ansible_mounts }}"
+  tags: journal-message-size
+
+- debug: var=graylog_message_journal_max_size
+  tags: journal-message-size
+
 - name: "Graylog server should be configured"
   template:
     src: "graylog.server.conf.j2"

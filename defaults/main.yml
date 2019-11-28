@@ -109,7 +109,8 @@ graylog_stream_processing_max_faults:     3
 graylog_message_journal_enabled:          True
 graylog_message_journal_dir:              "/var/lib/graylog-server/journal"
 graylog_message_journal_max_age:          "12h"
-graylog_message_journal_max_size:         "5gb"
+#when graylog_message_journal_max_size is set to 0gb then get 90% of disk size
+graylog_message_journal_max_size:         "0gb"
 graylog_message_journal_flush_age:        "1m"
 graylog_message_journal_flush_interval:   1000000
 graylog_message_journal_segment_age:      "1h"
